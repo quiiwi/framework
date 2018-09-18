@@ -1,0 +1,79 @@
+---------------------------
+EXPLICATIONS MINI-FRAMEWORK
+---------------------------
+
+Arborescence : 
+--------------
+	app/ : La configuration de notre application
+	src/ : Le code PHP et HTML spécifique à notre projet
+	vendor/ : Code général (coeur) de l'application
+	web/ : Repertoire web racine, point d'entrée de notre application (index.php, img/, photo/, Js/, fonts/). Les assets (ressources). 
+	
+
+Nature des différents fichiers :
+--------------------------------
+
+app/
+	Config/
+		parameters.php : Contient toutes les informations de connexion à la BDD... et autres paramètres
+		
+	config.php : Contient la class Config, dont l'objectif est de récupérer les parametres et de les servir...	
+		
+vendor/
+	autoload.php : Ce fichier permet d'inclure (require) les bons fichiers lors des instanciations. Lorsqu'on va créer un objet l'autoload va se charger d'inclure la classe necessaire. 
+		
+src/
+	Entity/
+		Produit.php / Membre.php / Commande.php : Ces classes contiennent toutes les propriétés (private) de nos entités + les getters et les setters. Ce sont les plans de fabrication de nos entités. On les appelle des POPO (Plain Old PHP Object). 
+		
+web/
+	index.php : Clé d'entrée de notre application (app.php ou app_dev.php)
+		
+		
+vendor/
+	Manager/
+		PDOManager.php : Cette classe représente la connexion à la BDD. Elle contient et nous retourne notre objet PDO, grâce auquel nous pourrons exécuter des requêtes SQL.
+		Cette classe est un singleton. Cela signifie qu'il ne peut y avoir qu'un seul objet issu de cette classe. 
+		
+	Repository/
+		EntityRepository.php : Ce fichier centralise tout ce qui touche à la base de données. Les repository servent à effectuer des requêtes SQL. Ce fichier est le parent des Repository, il gère la connexion à la BDD et les requêtes génériques. 
+		
+src/
+	Repository/
+		ProduitRepository.php : Ce fichier contiendra toutes les fonctions lié à l'entité Produit, et "demandera" à EntityRepository de faire certaines requêtes. On ne codera dans ce repository que les requêtes qui lui sont propres.
+		
+
+vendor/
+	Controller/
+		Controller.php : C'est le controller général de l'application. IL a deux missions : 
+			1/ Récupérer le repository correspondant à l'entité dans laquelle nous sommes (getRepository())
+			2/ Afficher la vue correspondant à l'action en cours (render()). 
+			
+src/
+	Controller/
+		ProduitController.php : Cette classe hérite du controller général, et permet de déclencher toutes les actions liées à l'entité Produit
+			
+	
+web/
+	Copier et coller depuis la boutique en procédural : photo/ (css/, js/, font/, img/ etc...)
+	
+src/
+	View/
+		Produit/ 
+			Copier et coller depuis phpoo/12-mvc : boutique.php, fiche_produit.php
+			Ces deux fichiers correspondent aux vues  des actions afficheAll(), affiche(), categorie(). 
+			Nous travaillons maintenant en Objet donc $produit['titre'] devient $produit -> getTitre()
+			Plus tard ces fichiers auront l'extension .html (grâce à la méthode render())
+			
+		layout.html : Ce fichier constitue la structure des pages du site. Le template. 
+		En fonction des sites, il peut y avoir plusieurs layout (home, Mentions légales, BackOffice...)
+			
+			
+vendor/
+	Manager/
+		Application.php : Cette classe représente le lancement de notre application. Elle a pour mission, de scruter l'URL, et de lancer le bon controller, et la bonne méthode. 
+		C'est notre "interrupteur". 
+			
+	
+		
+	

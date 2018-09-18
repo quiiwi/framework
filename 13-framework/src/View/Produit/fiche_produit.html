@@ -1,0 +1,61 @@
+        <!-- Portfolio Item Row -->
+        <div class="row">
+
+			<div class="col-lg-12">
+				<h1><?= $produit -> getTitre() ?></h1>
+			</div>
+			
+	
+	 		<div class="col-md-8">
+                <img class="img-fluid" src="<?= $url . $produit -> getPhoto() ?>" alt="<?= $produit -> getTitre() ?>">
+            </div>
+	
+			<div class="col-md-4">
+				<h3>Description</h3>
+				<p><?= $produit -> getDescription() ?></p>
+				
+				<h3>Détails</h3>
+				<ul>
+					<li>Catégorie : <?= $produit -> getCategorie() ?> </li>
+					<li>Couleur : <?= $produit -> getCouleur() ?> </li>
+					<li>Taille : <?= $produit -> getTaille() ?> </li>
+				</ul>
+				<h4>Prix : <?php echo number_format($produit -> getPrix(),2,',',''); ?> €</h4>
+
+ 				
+				<br><a href="<?= $url ?>produit/categorie/<?= $produit -> getCategorie() ?>"> Retour vers votre sélection</a>
+			</div><!-- .col-md-4 -->
+        </div>
+        <!-- /.row -->
+
+        <hr>	
+
+		<div class="row">
+            <div class="col-lg-12">
+                <h3>Suggestions de produits</h3>
+            </div>
+
+			<?php if($suggestions) : ?>
+				<?php foreach($suggestions as $sug) : ?>
+				<div class="col-sm-3">
+					<a href="<? $url ?>produit/affiche/<?= $sug -> getId_produit() ?>">
+						<img class="img-fluid" src="<?= $url . $sug -> getPhoto() ?>">
+					 </a>
+					<h4><?= $sug -> getTitre() ?></h4>
+				</div>
+				<?php endforeach; ?>
+			<?php else :  ?>
+			<p>Aucune suggestion de produit trouvée</p>
+			<?php endif; ?>
+			
+		</div>
+		<!-- 4 suite : ajout du JS pour afficher le popup panier : -->
+		<script>
+			$(function(){
+				// Show the Modal on load
+				$("#myModal").modal("show");
+			});
+		</script>
+
+
+
